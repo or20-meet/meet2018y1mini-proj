@@ -28,7 +28,7 @@ food_stamps = []
 
 #Set up positions (x,y) of boxes that make up the snake
 snake = turtle.clone()
-snake.shape("square")
+snake.shape("circle")
 
 #Hide the turtle object (it's an arrow - we don't need to see it)
 turtle.hideturtle()
@@ -107,6 +107,8 @@ turtle.onkeypress(right, RIGHT_ARROW)
 
 turtle.listen()
 
+food = turtle.clone()
+
 def make_food():
     min_x=-int(SIZE_X/2/SQUARE_SIZE)+1
     max_x=int(SIZE_X/2/SQUARE_SIZE)-1
@@ -138,7 +140,10 @@ def move_snake():
         print('you move up!')
     elif direction==DOWN:
         snake.goto(x_pos,y_pos-SQUARE_SIZE)
-    
+    for p in pos_list:
+        if p== snake.pos():
+            quit()
+
     #4. Write the conditions for UP and DOWN on your own
     ##### YOUR CODE HERE
 
@@ -160,9 +165,10 @@ def move_snake():
 
     #pop zeroth element in pos_list to get rid of last the last 
     #piece of the tail
-    old_stamp = stamp_list.pop(0)
-    snake.clearstamp(old_stamp)
-
+    else:
+        old_stamp = stamp_list.pop(0)
+        snake.clearstamp(old_stamp)
+    
     pos_list.pop(0)
     new_pos = snake.pos()
     new_x_pos = new_pos[0]
@@ -179,10 +185,9 @@ def move_snake():
     if new_y_pos>= UP_EDGE:
         print("you hit the TOP edge! game over!")
         quit()
+    if len(food_stamps)<=6:
+        make_food()
     turtle.ontimer(move_snake,TIME_STEP)
-    if len(food_stamps) <= 6 :
-         make_food()
-
 move_snake()
         
 turtle.register_shape("trash.gif") #Add trash picture
@@ -190,7 +195,7 @@ turtle.register_shape("trash.gif") #Add trash picture
                       # from the Google Drive folder and saved it
                       # in the same folder as this Python script
 
-food = turtle.clone()
+
 food.shape("trash.gif") 
 
 #Locations of food
