@@ -26,9 +26,12 @@ stamp_list = []
 food_pos = []
 food_stamps = []
 
+
 #Set up positions (x,y) of boxes that make up the snake
 snake = turtle.clone()
 snake.shape("circle")
+
+
 
 #Hide the turtle object (it's an arrow - we don't need to see it)
 turtle.hideturtle()
@@ -128,6 +131,11 @@ def move_snake():
     my_pos = snake.pos()
     x_pos = my_pos[0]
     y_pos = my_pos[1]
+
+    color_list=['#7FFFD4','#FF83FA','aqua','#FF82AB','#FFA500']
+    colornum= random.randint(0,4)
+    color= color_list[colornum]
+    snake.color(color)
     
     if direction==RIGHT:
         snake.goto(x_pos + SQUARE_SIZE, y_pos)
@@ -143,9 +151,6 @@ def move_snake():
     for p in pos_list:
         if p== snake.pos():
             quit()
-
-    #4. Write the conditions for UP and DOWN on your own
-    ##### YOUR CODE HERE
 
     #Stamp new element and append new stamp in list
     #Remember: The snake position changed - update my_pos()
